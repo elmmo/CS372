@@ -11,8 +11,8 @@ public class Police extends Person implements Employee {
 		position = PoliceRoles.PATROL; 
 	}
 	
-	Police(String name, int age, String phoneNum, PoliceRoles role) {
-		super(name, age, phoneNum, 0.00); 
+	Police(String name, int age, String phoneNum, double money, PoliceRoles role) {
+		super(name, age, phoneNum, money); 
 		id = (int)Math.random()*1000; 
 		position = role; 
 	}

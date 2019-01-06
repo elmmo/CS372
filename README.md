@@ -24,3 +24,8 @@ Any year input must be made up of at least four integers.
 
 6. Getters and Setters
 Comments aren't written for getters and setters unless the function declaration is unclear. 
+
+### HW2
+
+1. Employee Payment  
+Assumes that the Employee that the method is called on is the boss, not the employee to be paid. 

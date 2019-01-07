@@ -17,6 +17,7 @@ public class HW1 {
 				System.out.printf("%d is %s\n", random, state); 
 			}
 		} else {
+			//PT -- Why not loop this for the user?
 			System.out.print("That number isn't between 10 and 100! Try again.");
 		}
 		System.out.println(); // for extra space at the end of the function output 
@@ -33,6 +34,7 @@ public class HW1 {
 			double area = PI*Math.pow(r, 2);
 			System.out.printf("The area of a circle with radius %.2f is %.2f\n", r, area); 
 		} else {
+			//Again, a loop would be helpful. -1
 			System.out.print("You can't have a negative radius! Try again.");
 		}
 		System.out.println(); // for extra space at the end of the function output
@@ -60,6 +62,7 @@ public class HW1 {
 			}
 			System.out.printf("The number is %d\n", numValue);
 		} else {
+			//PT -- loop on this case
 			System.out.println("You didn't give me a positive number...");
 		}
 		System.out.println(); // for extra space at the end of the function output

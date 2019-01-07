@@ -1,18 +1,27 @@
+enum Certification {
+	EARLY_CHILDHOOD, ELEMENTARY, SECONDARY, SPECIAL_ED, LIBRARIAN; 
+	
+	static int length() {
+		int len = 0; 
+		for (Certification role : Certification.values()) len++; 
+		return len; 
+	}
+}
 
 public class Teacher extends Person implements Employee {
 	int id; 
 	int gradeLevel; 
-	String certification; 
+	Certification cert; 
 	
 	Teacher() {
 		id = (int)Math.random()*1000; 
 	}
 	
-	Teacher(String name, int age, String phoneNum, double money, int grade, String cert) {
+	Teacher(String name, int age, String phoneNum, double money, int grade, Certification cert) {
 		super(name, age, phoneNum, money); 
 		id = (int)Math.random()*1000; 
 		gradeLevel = grade; 
-		certification = cert; 
+		this.cert = cert; 
 	}
 
 	@Override

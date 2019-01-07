@@ -17,7 +17,8 @@ public class HW1 {
 				System.out.printf("%d is %s\n", random, state); 
 			}
 		} else {
-			System.out.print("That number isn't between 10 and 100! Try again.");
+			System.out.print("That number isn't between 10 and 100! Do you want to try again?");
+			if (console.next().toLowerCase().equals("yes")) evenOdd(); 
 		}
 		System.out.println(); // for extra space at the end of the function output 
 	}
@@ -33,7 +34,8 @@ public class HW1 {
 			double area = PI*Math.pow(r, 2);
 			System.out.printf("The area of a circle with radius %.2f is %.2f\n", r, area); 
 		} else {
-			System.out.print("You can't have a negative radius! Try again.");
+			System.out.print("You can't have a negative radius! Do you want to try again?");
+			if (console.next().toLowerCase().equals("yes")) evenOdd(); 
 		}
 		System.out.println(); // for extra space at the end of the function output
 	}
@@ -61,6 +63,8 @@ public class HW1 {
 			System.out.printf("The number is %d\n", numValue);
 		} else {
 			System.out.println("You didn't give me a positive number...");
+			System.out.print("Do you want to try again?" );
+			if (console.next().toLowerCase().equals("yes")) evenOdd(); 
 		}
 		System.out.println(); // for extra space at the end of the function output
 	}
@@ -88,7 +92,8 @@ public class HW1 {
 			
 			System.out.printf("\nYour BMI is %.4f.\n", bmi); 
 		} else {
-			System.out.println("You can't have a negative weight or height! Try again.");
+			System.out.println("You can't have a negative weight or height! Do you want to try again? ");
+			if (console.next().toLowerCase().equals("yes")) evenOdd(); 
 		}
 		System.out.println(); // for extra space at the end of the function output
 	}

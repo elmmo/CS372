@@ -1,17 +1,23 @@
-enum PoliceRoles {
+enum PoliceRole {
 	PATROL, SARGEANT, CAPTAIN, CHIEF; 
+	
+	static int length() {
+		int len = -1; 
+		for (PoliceRole role : PoliceRole.values()) len++; 
+		return len; 
+	}
 }
 
 public class Police extends Person implements Employee {
 	int id; 
-	PoliceRoles position; 
+	PoliceRole position; 
 	
 	Police() {
 		id = (int)Math.random()*1000; 
-		position = PoliceRoles.PATROL; 
+		position = PoliceRole.PATROL; 
 	}
 	
-	Police(String name, int age, String phoneNum, double money, PoliceRoles role) {
+	Police(String name, int age, String phoneNum, double money, PoliceRole role) {
 		super(name, age, phoneNum, money); 
 		id = (int)Math.random()*1000; 
 		position = role; 

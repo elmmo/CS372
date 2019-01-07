@@ -71,6 +71,6 @@ public class Hw2PeopleTests {
 	@Test 
 	public void testKidAgeException() {
 		thrown.expect(IllegalArgumentException.class);
-		Kid kiddo = new Kid("Kiddo", 19, "306-475-9722", 0.00, "Snickers"); 
+		Kid kiddo = new Kid("Kiddo", 19, "306-475-9722", 0.00, Candy.SOUR_APPLE); 
 	}
 }

@@ -24,7 +24,7 @@ public class Person {
 	int getAge() { return age; }
 	String getPhoneNum() { return phoneNum; }
 	BigDecimal getMoneyInBank() { return moneyInBank; }
-	BigDecimal withdrawMoney(double amount) { 
+	BigDecimal withdrawMoney(double amount) throws IllegalArgumentException { 
 		if (moneyInBank.doubleValue() < amount) {
 			System.out.println("Insufficient funds");
 		} else if (amount < 0) {
@@ -34,7 +34,7 @@ public class Person {
 		}
 		return moneyInBank; 
 	}
-	BigDecimal depositMoney(double amount) {
+	BigDecimal depositMoney(double amount) throws IllegalArgumentException {
 		if (amount < 0) throw new IllegalArgumentException("Amount to withdraw must be a positive value.");
 		moneyInBank = moneyInBank.add(new BigDecimal(amount));
 		return moneyInBank; 

@@ -26,8 +26,13 @@ public class City {
 			String name = line[0];
 			String phoneNum = line[1]; 
 			
+			// calculating money 
+			int factor = (rnd/10)+1; 
+			double money = (10*(rnd/factor))*(factor*(1.5*rnd)); 
+			System.out.println(money);
+			
 			// determining person type and role 
-			int type = (rnd/10)/3;  
+			int type = (rnd/10)/3; 
 			int role = (rnd%10)/3; 
 			
 			CitizenType t = CitizenType.values()[type]; 

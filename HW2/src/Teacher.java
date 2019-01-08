@@ -26,12 +26,16 @@ public class Teacher extends Person implements Employee {
 
 	@Override
 	public void payEmployee(Person p, double amount) {
-		p.depositMoney(amount);
+		if (p instanceof Teacher) p.depositMoney(amount); 
 	}
 
 	@Override
 	public int getId() {
 		return id; 
+	}
+	
+	public String toString() {
+		return String.format("Hi, my name is %s, I'm %d years old, and I'm a teacher!", name, age); 
 	}
 
 }

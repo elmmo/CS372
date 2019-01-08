@@ -22,4 +22,8 @@ public class Kid extends Person {
 		if (age > 18) throw new IllegalArgumentException("You're too old to be a kid!");
 		favCandy = candy; 
 	}
+	
+	public String toString() {
+		return String.format("I'm %s, and I like candy.", name); 
+	}
 }

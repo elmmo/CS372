@@ -1,9 +1,5 @@
 import java.io.File; 
-import java.util.Map; 
-import java.util.HashMap; 
 import java.util.Scanner;
-
-import org.omg.CORBA.CTX_RESTRICT_SCOPE;
 
 import java.util.ArrayList; 
 
@@ -12,10 +8,13 @@ enum CitizenType {
 }
 
 public class City {
-	ArrayList<Object> citizens; 
+	ArrayList<Person> citizens; 
+	ArrayList<Building> buildings; 
 	Scanner console; 
 	boolean librarian; 
 	boolean chief; 
+	boolean cityhall; 
+	boolean school; 
 
 	void citizenPopulation() throws Exception {
 		File file = new File("citizens.txt"); 
@@ -29,7 +28,6 @@ public class City {
 			// calculating money 
 			int factor = (rnd/10)+1; 
 			double money = (10*(rnd/factor))*(factor*(1.5*rnd)); 
-			System.out.println(money);
 			
 			// determining person type and role 
 			int type = (rnd/10)/3; 
@@ -84,12 +82,53 @@ public class City {
 		}
 	}
 	
+	void buildingPopulation() throws Exception {
+		File file = new File("buildings"); 
+		console = new Scanner(file); 
+		
+		while (console.hasNextLine()) {
+			String[] line = (console.nextLine()).split("	"); 
+			String name = line[0];
+			String address = line[1]; 
+			if (name.contains("City Hall")) {
+				buildings.add(new CityHall(name, address)); 
+				cityhall = true; 
+			} else if (name.contains("School")) {
+				buildings.add(new School(name, address)); 
+				school = true; 
+			} else {
+				buildings.add(new Building(name, address)); 
+			}
+		}
+		
+		if (!(cityhall)) buildings.add(new CityHall()); 
+		if (!(school)) buildings.add(new School()); 
+	}
+	
 	City() {
-		citizens = new ArrayList<Object>(); 
+		citizens = new ArrayList<Person>(); 
+		buildings = new ArrayList<Building>(); 
 		try {
 			citizenPopulation(); 
+			buildingPopulation(); 
 		} catch (Exception e) {
 			e.printStackTrace(); 
+		}
+	}
+	
+	public void getAllPeople() {
+		System.out.println("\nPEOPLE");
+		for (int i = 0; i < citizens.size(); i++) {
+			Person c = (Person)citizens.get(i); 
+			System.out.println(c.getName());
+		}
+	}
+	
+	public void getAllBuildings() {
+		System.out.println("\nBUILDINGS");
+		for (int i = 0; i < buildings.size(); i++) {
+			Building c = (Building)buildings.get(i); 
+			System.out.println(c.getName());
 		}
 	}
 	

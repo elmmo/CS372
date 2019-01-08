@@ -25,11 +25,17 @@ public class Police extends Person implements Employee {
 	
 	@Override
 	public void payEmployee(Person p, double amount) {
-		p.depositMoney(amount);
+		if (p == this && amount > 500.00) throw new IllegalArgumentException("That's embezzling! >:(");  
+		if (!(p instanceof Police)) throw new IllegalArgumentException("It's illegal to pay someone outside the department with federal funds! >:("); 
+		if (position == PoliceRole.CHIEF) p.depositMoney(amount); 
 	}
 	
 	@Override
 	public int getId() {
 		return id; 
+	}
+	
+	public String toString() {
+		return String.format("Hi, my name is %s, I'm %d years old, and I'm a policeman.", name, age); 
 	}
 }

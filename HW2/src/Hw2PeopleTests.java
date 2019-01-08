@@ -65,7 +65,10 @@ public class Hw2PeopleTests {
 	
 	@Test 
 	public void testPayEmployee() {
-		// implement
+		Police boss = new Police("Joe", 42, "253-419-4129", 200.00, PoliceRole.CHIEF); 
+		Police employee = new Police("Fred", 22, "438-452-5943", 50.00, PoliceRole.PATROL); 
+		boss.payEmployee(employee, 78.00); 
+		Assert.assertEquals("Police payEmployee", new BigDecimal(128.00), employee.getMoneyInBank()); 
 	}
 	
 	@Test 

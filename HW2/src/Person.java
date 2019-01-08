@@ -39,4 +39,8 @@ public class Person {
 		moneyInBank = moneyInBank.add(new BigDecimal(amount));
 		return moneyInBank; 
 	}
+	
+	public String toString() {
+		return String.format("Hi, my name is %s, and I'm %d years old.", name, age); 
+	}
 }

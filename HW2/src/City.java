@@ -13,8 +13,16 @@ public class City {
 	Scanner console; 
 	boolean librarian; 
 	boolean chief; 
-	boolean cityhall; 
-	boolean school; 
+	
+	/** 
+	 * the city's city hall 
+	 */
+	public CityHall cityHall;
+	
+	/** 
+	 * the city's school 
+	 */
+	public School school;
 
 	void citizenPopulation() throws Exception {
 		File file = new File("citizens.txt"); 
@@ -43,7 +51,11 @@ public class City {
 			
 			switch (t) {
 			case KID:
-				citizens.add(new Kid(name, rnd, phoneNum, money, Candy.values()[role])); 
+				Kid k = new Kid(name, rnd, phoneNum, money, Candy.values()[role]); 
+				citizens.add(k); 
+				if (role > 0) { // 3/4 chance that the kid will be in school
+					school.addOccupant(k);
+				}
 				break; 
 			case TEACHER: 
 				// certifications 
@@ -61,22 +73,37 @@ public class City {
 				} else if (role == 2) { // secondary 
 					grade = (int)(Math.random()*4+1)+8;
 				} else { // special ed
-					grade= (int)(Math.random()*12+1); 
+					grade = (int)(Math.random()*12+1); 
 				}
 				
-				citizens.add(new Teacher(name, rnd, phoneNum, money, grade, cert)); 
+				Teacher teacher = new Teacher(name, rnd, phoneNum, money, grade, cert);
+				if (role > 0) { // 3/4 chance that the teacher will be in school
+					school.addOccupant(teacher);
+				}
+				citizens.add(teacher); 
 				break; 
 			case POLICE: 
 				// role
 				PoliceRole position = PoliceRole.values()[role]; 
+				
+				// making sure that there's at least one chief in the police force
 				if (!chief) {
 					position = PoliceRole.CHIEF; 
 					chief = true; 
 				}
-				citizens.add(new Police(name, rnd, phoneNum, money, position)); 
+				
+				// creating the policeman and (potentially) assigning location 
+				Police policeman = new Police(name, rnd, phoneNum, money, position); 
+				citizens.add(policeman); 
+				if (role > 1) { // 50/50 chance that the policeman will be in City Hall
+					cityHall.addOccupant(policeman);
+				}
 				break; 
 			default: 
-				citizens.add(new Person(name, rnd, phoneNum, money)); 
+				Person p = new Person(name, rnd, phoneNum, money); 
+				citizens.add(p); 
+				Building b = buildings.get((int)(Math.random()*(buildings.size()-1))); 
+				b.addOccupant(p);
 				break; 
 			}
 		}
@@ -91,26 +118,27 @@ public class City {
 			String name = line[0];
 			String address = line[1]; 
 			if (name.contains("City Hall")) {
-				buildings.add(new CityHall(name, address)); 
-				cityhall = true; 
+				cityHall = new CityHall(name, address); 
+				buildings.add(cityHall); 
 			} else if (name.contains("School")) {
-				buildings.add(new School(name, address)); 
-				school = true; 
+				school = new School(name, address); 
+				buildings.add(school); 
 			} else {
 				buildings.add(new Building(name, address)); 
 			}
 		}
 		
-		if (!(cityhall)) buildings.add(new CityHall()); 
-		if (!(school)) buildings.add(new School()); 
+		// verifying if there is a city hall and a school (required buildings) in the city
+		if (cityHall == null) buildings.add(new CityHall()); 
+		if (school == null) buildings.add(new School()); 
 	}
 	
 	City() {
 		citizens = new ArrayList<Person>(); 
 		buildings = new ArrayList<Building>(); 
 		try {
-			citizenPopulation(); 
 			buildingPopulation(); 
+			citizenPopulation(); 
 		} catch (Exception e) {
 			e.printStackTrace(); 
 		}

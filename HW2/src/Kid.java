@@ -1,6 +1,6 @@
 
 enum Candy {
-	STRAWBERRY, RASPBERRY, CHOCOLATE, WATERMELON, SOUR_APPLE, PEACH;
+	RASPBERRY, WATERMELON, SOUR_APPLE, PEACH;
 	
 	static int length() {
 		int len = 0; 

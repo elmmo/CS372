@@ -45,7 +45,7 @@ public class City {
 			
 			switch (t) {
 			case KID:
-				citizens.add(new Kid(name, rnd, phoneNum, 0.00, Candy.values()[role])); 
+				citizens.add(new Kid(name, rnd, phoneNum, money, Candy.values()[role])); 
 				break; 
 			case TEACHER: 
 				// certifications 
@@ -66,7 +66,7 @@ public class City {
 					grade= (int)(Math.random()*12+1); 
 				}
 				
-				citizens.add(new Teacher(name, rnd, phoneNum, 0.00, grade, cert)); 
+				citizens.add(new Teacher(name, rnd, phoneNum, money, grade, cert)); 
 				break; 
 			case POLICE: 
 				// role
@@ -75,10 +75,10 @@ public class City {
 					position = PoliceRole.CHIEF; 
 					chief = true; 
 				}
-				citizens.add(new Police(name, rnd, phoneNum, 0.00, position)); 
+				citizens.add(new Police(name, rnd, phoneNum, money, position)); 
 				break; 
 			default: 
-				citizens.add(new Person(name, rnd, phoneNum, 0.00)); 
+				citizens.add(new Person(name, rnd, phoneNum, money)); 
 				break; 
 			}
 		}

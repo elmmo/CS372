@@ -1,11 +1,15 @@
-
+/** 
+ * simulates the creation of a city -- tests city 
+ * @author Elizabeth Min
+ */
 public class CityTest {
 
 	public static void main(String[] args) {
 		City c = new City(); 
-		System.out.println(5 / 3); 
-		System.out.println(PoliceRole.length());
-
+		c.getAllPeople(); 
+		c.getAllBuildings();
+		c.cityHall.getPoliceOfficers();
+		c.school.getTeachersAndKids();
 	}
 
 }

@@ -1,6 +1,16 @@
+/** 
+ * Models a teacher with information on certification and grade level 
+ * @author Elizabeth Min
+ *
+ */
+
 enum Certification {
 	EARLY_CHILDHOOD, ELEMENTARY, SECONDARY, SPECIAL_ED, LIBRARIAN; 
 	
+	/**
+	 * Gets the number of items present in the enum 
+	 * @return num items in enum 
+	 */
 	static int length() {
 		int len = 0; 
 		for (Certification role : Certification.values()) len++; 
@@ -13,10 +23,22 @@ public class Teacher extends Person implements Employee {
 	int gradeLevel; 
 	Certification cert; 
 	
+	/** 
+	 * default constructor that assigns a random int as id and takes the defaults of the Person class
+	 */
 	Teacher() {
 		id = (int)Math.random()*1000; 
 	}
 	
+	/** 
+	 * arg constructor that allows the user to define all properties of Teacher
+	 * @param name	the name of the teacher 
+	 * @param age	the age of the teacher
+	 * @param phoneNum	the phone number of the teacher 
+	 * @param money	the money the teacher has 
+	 * @param grade	the grade the teacher teaches 
+	 * @param cert	the certification the teacher has 
+	 */
 	Teacher(String name, int age, String phoneNum, double money, int grade, Certification cert) {
 		super(name, age, phoneNum, money); 
 		id = (int)Math.random()*1000; 
@@ -24,14 +46,27 @@ public class Teacher extends Person implements Employee {
 		this.cert = cert; 
 	}
 
+	/** 
+	 * Overrides payEmployee to ensure that the person is another teacher 
+	 */
 	@Override
 	public void payEmployee(Person p, double amount) {
-		p.depositMoney(amount);
+		if (p instanceof Teacher) p.depositMoney(amount); 
 	}
 
+	/** 
+	 * implements from Employee to get the id of the teacher 
+	 */
 	@Override
 	public int getId() {
 		return id; 
+	}
+	
+	/** 
+	 * Overloads toString as a short self-introduction 
+	 */
+	public String toString() {
+		return String.format("Hi, my name is %s, I'm %d years old, and I'm a teacher!", name, age); 
 	}
 
 }

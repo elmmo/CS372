@@ -3,6 +3,10 @@ import java.util.Scanner;
 
 import java.util.ArrayList; 
 
+/** 
+ * Models a city with a school and a city hall 
+ * @author Elizabeth Min
+ */
 enum CitizenType {
 	TEACHER, POLICE, KID, PERSON; 
 }
@@ -23,8 +27,13 @@ public class City {
 	 * the city's school 
 	 */
 	public School school;
-
+	
+	/** 
+	 * Populates the city with users made from a combination of randomly-generated data and parsing from a file
+	 * @throws Exception	for a FileNotFoundException
+	 */
 	void citizenPopulation() throws Exception {
+		citizens = new ArrayList<Person>(); 
 		File file = new File("citizens.txt"); 
 		console = new Scanner(file); 
 		while (console.hasNextLine()) {
@@ -109,7 +118,12 @@ public class City {
 		}
 	}
 	
+	/** 
+	 * Populates the city with buildings by parsing a file
+	 * @throws Exception	for a FileNotFoundException
+	 */
 	void buildingPopulation() throws Exception {
+		buildings = new ArrayList<Building>(); 
 		File file = new File("buildings"); 
 		console = new Scanner(file); 
 		
@@ -133,9 +147,11 @@ public class City {
 		if (school == null) buildings.add(new School()); 
 	}
 	
+	/** 
+	 * default constructor creates a standard city. 
+	 * Population is only dependent upon the number of entries in the txt files
+	 */
 	City() {
-		citizens = new ArrayList<Person>(); 
-		buildings = new ArrayList<Building>(); 
 		try {
 			buildingPopulation(); 
 			citizenPopulation(); 
@@ -144,6 +160,9 @@ public class City {
 		}
 	}
 	
+	/** 
+	 * prints out the names of all the people in the city 
+	 */
 	public void getAllPeople() {
 		System.out.println("\nPEOPLE");
 		for (int i = 0; i < citizens.size(); i++) {
@@ -152,6 +171,9 @@ public class City {
 		}
 	}
 	
+	/** 
+	 * prints out the names of all the buildings in the city 
+	 */
 	public void getAllBuildings() {
 		System.out.println("\nBUILDINGS");
 		for (int i = 0; i < buildings.size(); i++) {
@@ -160,6 +182,9 @@ public class City {
 		}
 	}
 	
+	/** 
+	 * closes the Scanner at the destruction of the city object 
+	 */
 	public void finalize() {
 		console.close(); 
 	}

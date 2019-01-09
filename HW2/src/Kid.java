@@ -1,4 +1,8 @@
 
+/** 
+ * Properties for a Person who's a Kid 
+ * @author Elizabeth Min
+ */
 enum Candy {
 	RASPBERRY, WATERMELON, SOUR_APPLE, PEACH;
 	

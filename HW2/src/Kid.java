@@ -10,6 +10,7 @@ enum Candy {
 	 * Gets the number of items present in the enum 
 	 * @return num items in enum 
 	 */
+	//PT -- I think you only need return Candy.values().length;
 	static int length() {
 		int len = 0; 
 		for (Candy role : Candy.values()) len++; 

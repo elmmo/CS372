@@ -51,6 +51,7 @@ public class Teacher extends Person implements Employee {
 	 */
 	@Override
 	public void payEmployee(Person p, double amount) {
+		//PT -- why does this function take a Person, and not simply operate on the this reference? -1
 		if (p instanceof Teacher) p.depositMoney(amount); 
 	}
 

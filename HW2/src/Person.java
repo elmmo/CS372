@@ -17,7 +17,7 @@ public class Person {
 		name = "John Doe"; 
 		age = 40; 
 		phoneNum = "123-456-7890"; 
-		moneyInBank = new BigDecimal(0.00); 
+		moneyInBank = new BigDecimal(0.00); //PT -- BigDecimal: sounds ambitious
 	}
 	
 	/** 

@@ -9,6 +9,9 @@ public class Conversion implements MouseMotionListener {
 	JLayeredPane pane; 
 	Point diff; 
 	JLabel label; 
+	City c; 
+	Object[] citizenInfo; 
+	JLabel[] cZens; 
 	
 	Conversion() {
 		initialize(); 
@@ -26,13 +29,13 @@ public class Conversion implements MouseMotionListener {
 		
 		createBackground(); 
 		
-		// creating jlabel 
-		label = new JLabel(); 
-		label.setBounds(30, 50, 90, 30);
-		label.setOpaque(true);
-		label.setBackground(Color.orange);
-		label.setText("Hello World");
-		pane.add(label, new Integer(2)); 
+		// get information from City 
+		c = new City(); 
+		citizenInfo = c.getAllPeople(false); 
+		cZens = new JLabel[citizenInfo.length]; 
+		
+		// creating jlabels
+		populateCitizens(); 
 		
 		// adding 
 		frame.add(pane); 
@@ -58,17 +61,34 @@ public class Conversion implements MouseMotionListener {
 		}
 	}
 	
-	public void mouseDragged(MouseEvent e) {
-		System.out.println("dragging");
-		JLabel l = null; 
-		if (label.getBounds().contains(e.getPoint())) {
-			l = label; 
+	private void populateCitizens() {
+		for (int i = 0; i < cZens.length; i++) {
+			Person p = (Person)citizenInfo[i]; 
+			
+			JLabel l = new JLabel(); 
+			l.setBounds(30+(i*100), 50, 90, 30);
+			l.setOpaque(true);
+			l.setBackground(Color.orange);
+			l.setText(p.getName());
+			cZens[i] = l; 
+			pane.add(cZens[i], new Integer(2)); 
+			
 		}
-		if (l != null) {
-			if (diff == null) {
-				diff = new Point(e.getX() - l.getBounds().x, e.getY() - l.getBounds().y); 
+	}
+	
+	public void mouseDragged(MouseEvent e) {
+		JLabel l = null; 
+		for (int i = 0; i < cZens.length; i++){
+			if (cZens[i].getBounds().contains(e.getPoint())) {
+				System.out.println("dragging");
+				l = cZens[i]; 
 			}
-			l.setBounds(e.getX() - diff.x, e.getY() - diff.y, l.getBounds().width, l.getBounds().height);
+			if (l != null) {
+				if (diff == null) {
+					diff = new Point(e.getX() - l.getBounds().x, e.getY() - l.getBounds().y); 
+				}
+				l.setBounds(e.getX() - diff.x, e.getY() - diff.y, l.getBounds().width, l.getBounds().height);
+			}
 		}
 	}
 	

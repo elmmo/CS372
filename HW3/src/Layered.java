@@ -22,8 +22,6 @@ public class Layered implements MouseMotionListener {
 
         lpane = new JLayeredPane();
         lpane.setPreferredSize(new Dimension(250,200));
-        lpane.setBorder(BorderFactory.createTitledBorder(
-                "Move the Mouse to Move Duke"));
         lpane.addMouseMotionListener(this);
 
         Color[] colors = {Color.gray, Color.red, Color.black};

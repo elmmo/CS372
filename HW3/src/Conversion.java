@@ -8,7 +8,6 @@ public class Conversion implements MouseMotionListener {
 	JFrame frame; 
 	JLayeredPane pane; 
 	Point diff; 
-	JLabel label; 
 	City c; 
 	Object[] citizenInfo; 
 	JLabel[] cZens; 
@@ -64,9 +63,14 @@ public class Conversion implements MouseMotionListener {
 	private void populateCitizens() {
 		for (int i = 0; i < cZens.length; i++) {
 			Person p = (Person)citizenInfo[i]; 
-			
 			JLabel l = new JLabel(); 
-			l.setBounds(30+(i*100), 50, 90, 30);
+			
+			l.setBounds(380, 50+(i*10), 90, 30);
+			c.school.getOccupants(); 
+			if (c.school.isOccupantInside(p)) l.setBounds(900, 50+(i*10), 90, 30);
+			c.cityHall.getOccupants(); 
+			if (c.cityHall.isOccupantInside(p)) l.setBounds(200, 50+(i*10), 90, 30);
+			
 			l.setOpaque(true);
 			l.setBackground(Color.orange);
 			l.setText(p.getName());
@@ -76,23 +80,41 @@ public class Conversion implements MouseMotionListener {
 		}
 	}
 	
+	// could make much more efficient 
 	public void mouseDragged(MouseEvent e) {
 		JLabel l = null; 
+		Person p = null; 
 		for (int i = 0; i < cZens.length; i++){
 			if (cZens[i].getBounds().contains(e.getPoint())) {
-				System.out.println("dragging");
 				l = cZens[i]; 
+				p = (Person)citizenInfo[i]; 
 			}
 			if (l != null) {
 				if (diff == null) {
 					diff = new Point(e.getX() - l.getBounds().x, e.getY() - l.getBounds().y); 
 				}
 				l.setBounds(e.getX() - diff.x, e.getY() - diff.y, l.getBounds().width, l.getBounds().height);
+				
+				// checks if the dragged label is within the bounds of the school or the city hall 
+				if (l.getX() > 890) {
+					if (!(c.school.isOccupantInside(p))) {
+						c.school.addOccupant(p);
+					}
+				} else if (c.school.isOccupantInside(p)) {
+					c.school.removeOccupant(p);
+				} else if (l.getX() < 295) {
+					if (!(c.cityHall.isOccupantInside(p))) {
+						c.cityHall.addOccupant(p);
+					}
+				} else if (c.cityHall.isOccupantInside(p)) {
+					c.cityHall.removeOccupant(p);
+				}
 			}
 		}
 	}
 	
 	public void mouseMoved(MouseEvent e) {
 		diff = null; 
+		//System.out.println(e.getX() + " " + e.getY());
 	}
 }

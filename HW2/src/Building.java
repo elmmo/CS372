@@ -50,8 +50,8 @@ public class Building {
 		if (occupants.size() == 0) {
 			System.out.println("There aren't any people in this building!");
 		} else {
+			System.out.println("\nOCCUPANTS");
 			for (int i = 0; i < occupants.size(); i++) {
-				System.out.println("\nOCCUPANTS");
 				Person p = occupants.get(i); 
 				System.out.println(p.getName());
 			}
@@ -59,12 +59,30 @@ public class Building {
 	}
 	
 	/** 
+	 * helper function designed for the gui 
+	 * @param p	the person to find in the building 
+	 * @return	true if the occupant is inside, false if not
+	 */
+	public boolean isOccupantInside(Person p) {
+		return occupants.contains(p); 
+	}
+	
+	/** 
 	 * adds a person to the building 
 	 * @param p	the person to add to the building 
 	 */
 	public void addOccupant(Person p) { occupants.add(p); }
+	
+	/** 
+	 * removes a person from the building 
+	 * @param p	the person to remove from the building 
+	 */
 	public void removeOccupant(Person p) { occupants.remove(p); }
 	
+	/** 
+	 * Gives information about the building
+	 * @return	building information 
+	 */
 	public String toString() {
 		return String.format("This is the %s, located at %s", name, address); 
 	}

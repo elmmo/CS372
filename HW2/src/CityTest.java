@@ -6,7 +6,7 @@ public class CityTest {
 
 	public static void main(String[] args) {
 		City c = new City(); 
-		c.getAllPeople(); 
+		c.getAllPeople(true); 
 		c.getAllBuildings();
 		c.cityHall.getPoliceOfficers();
 		c.school.getTeachersAndKids();

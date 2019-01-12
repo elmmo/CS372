@@ -44,9 +44,9 @@ public class Building {
 	public String getAddress() { return address; }
 	
 	/** 
-	 * prints out the occupants in the building 
+	 * prints out all the occupants in the building 
 	 */
-	public void getOccupants() { 
+	public void getAllOccupants() { 
 		if (occupants.size() == 0) {
 			System.out.println("There aren't any people in this building!");
 		} else {
@@ -84,6 +84,6 @@ public class Building {
 	 * @return	building information 
 	 */
 	public String toString() {
-		return String.format("This is the %s, located at %s", name, address); 
+		return String.format("%s\n%s", name, address); 
 	}
 }

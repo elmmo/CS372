@@ -11,8 +11,11 @@ public class Conversion implements MouseInputListener {
 	Point diff; 
 	City c; 
 	Object[] citizenInfo; 
+	Object[] buildingInfo; 
 	JLabel[] cZens; 
-	JLabel tooltip; 
+	
+	// tooltips 
+	JTextArea tooltip; 
 	boolean exitToolTip = false; 
 	
 	Conversion() {
@@ -27,18 +30,21 @@ public class Conversion implements MouseInputListener {
 		
 		// create layered pane
 		pane = new JLayeredPane(); 
-		pane.addMouseListener(this);
-		pane.addMouseMotionListener(this);
 		
-		//createBackground(); 
+		//setting up action listeners
+		frame.addMouseListener(this);
+		frame.addMouseMotionListener(this);
 		
-		// get information from City 
+		// get information from City and store info about buildings
 		c = new City(); 
-		citizenInfo = c.getAllPeople(false); 
-		cZens = new JLabel[citizenInfo.length]; 
+		buildingInfo = new Object[2]; 
+		citizenInfo = c.getAllPeople(false);
+		cZens = new JLabel[citizenInfo.length+buildingInfo.length];
+		
+		createBackground(); 
 		
 		// creating jlabels
-		populateCitizens(); 
+		populate(); 
 		
 		// adding 
 		frame.add(pane); 
@@ -46,41 +52,61 @@ public class Conversion implements MouseInputListener {
 	}
 	
 	private void createBackground() {
-		createIcon("/resources/cityHallresize.png", -30, -10, 331, 331, 1); 
-		createIcon("/resources/bg-middle.jpg", 240, 0, 650, 331, 1); 
-		createIcon("/resources/school.jpg", 830, 0, 441, 331, 1);
+		createIcon("/resources/cityHallresize.png", -30, -10, 331, 331, 1, true); 
+		buildingInfo[0] = c.cityHall;  
+		createIcon("/resources/bg-middle.jpg", 240, 0, 650, 331, 1, false); 
+		createIcon("/resources/school.jpg", 830, 0, 441, 331, 1, true);
+		buildingInfo[1] = c.school; 
 	}
 	
-	private void createIcon(String loc, int x, int y, int width, int height, Integer layer) {
+	private JLabel createIcon(String loc, int x, int y, int width, int height, Integer layer, boolean building) {
 		try {
 			URL resource = getClass().getResource(loc); 
 			ImageIcon img = new ImageIcon(resource); 
 			JLabel bgImg = new JLabel(img); 
 			bgImg.setBounds(x, y, width, height); 
 			pane.add(bgImg, layer);
+			if (building) {
+				if (x == -30) x = -60; // manually adjusting the first picture because not all the labels are the same dimensions
+				JLabel info = createIcon("/resources/infoIcon.png", x+70, 10, 50, 50, 2, false); 
+				int i = 0; 
+				while (i != -1) {
+					if (cZens[citizenInfo.length + i] == null) {
+						cZens[citizenInfo.length + i] = info; 
+						i = -1; 
+					} else {
+						i++; 
+					}
+				}
+			}
+			return bgImg; 
 		} catch (NullPointerException e) {
 			System.out.println("Obtaining the URL of the file at " + loc + " failed");
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	private void populateCitizens() {
+	private void populate() {
 		for (int i = 0; i < cZens.length; i++) {
-			Person p = (Person)citizenInfo[i]; 
 			JLabel l = new JLabel(); 
 			
-			// settings bounds based on where the person was placed 
-			l.setBounds(380, 50+(i*10), 90, 30);
-			c.school.getOccupants(); 
-			if (c.school.isOccupantInside(p)) l.setBounds(900, 50+(i*15), 90, 30);
-			c.cityHall.getOccupants(); 
-			if (c.cityHall.isOccupantInside(p)) l.setBounds(200, 50+(i*10), 90, 30);
-			
-			l.setOpaque(true);
-			l.setBackground(Color.orange);
-			l.setText(p.getName());
-			cZens[i] = l; 
-			pane.add(cZens[i], new Integer(2)); 
+			if (i < citizenInfo.length) {
+				Person p = (Person)citizenInfo[i]; 
+				
+				// setting based on where the person was placed 
+				l.setBounds(380, 50+(i*10), 90, 30);
+				c.school.getAllOccupants(); 
+				if (c.school.isOccupantInside(p)) l.setBounds(900, 50+(i*15), 90, 30);
+				c.cityHall.getAllOccupants(); 
+				if (c.cityHall.isOccupantInside(p)) l.setBounds(200, 50+(i*10), 90, 30);
+				
+				l.setOpaque(true);
+				l.setBackground(Color.orange);
+				l.setText(p.getName());
+				cZens[i] = l; 
+				pane.add(cZens[i], new Integer(2)); 
+			}
 		}
 	}
 	
@@ -91,6 +117,29 @@ public class Conversion implements MouseInputListener {
 			}
 		}
 		return -1; 
+	}
+	
+	/** 
+	 * 
+	 * Input validation is suggested in mouse motion listeners
+	 * @param e
+	 */
+	public void createToolTip(MouseEvent e) {
+		Object o; 
+		int index = getLabel(e); 
+		if (index != -1 && !exitToolTip) {
+			JLabel l = cZens[index]; 
+			o = (index >= citizenInfo.length) ? buildingInfo[index-citizenInfo.length] : citizenInfo[index]; 
+			tooltip = new JTextArea(); 
+			
+			// settings bounds based on where the person was placed 
+			tooltip.setBounds(l.getX()+10, l.getY()+20, 180, 85);
+			tooltip.setOpaque(true);
+			tooltip.setBackground(Color.white);
+			tooltip.setText(o.toString());
+			pane.add(tooltip, new Integer(3)); 
+			exitToolTip = true; 
+		}
 	}
 	
 	// could make much more efficient 
@@ -129,33 +178,17 @@ public class Conversion implements MouseInputListener {
 	
 	public void mouseEntered(MouseEvent e) {}
 	
-	public void mouseReleased(MouseEvent e) {
-	}
+	public void mouseReleased(MouseEvent e) {}
 	
 	public void mouseExited(MouseEvent e) {}
 	
 	public void mouseClicked(MouseEvent e) {
-		int index = getLabel(e); 
-		
-		if (index != -1 && !exitToolTip) {
-			JLabel l = cZens[index]; 
-			tooltip = new JLabel(); 
-			Person p = (Person)citizenInfo[index]; 
-			
-			// settings bounds based on where the person was placed 
-			tooltip.setBounds(l.getX()+10, l.getY()+20, 400, 20);
-			tooltip.setOpaque(true);
-			tooltip.setBackground(Color.white);
-			tooltip.setText(p.toString());
-			pane.add(tooltip, new Integer(3)); 
-			exitToolTip = true; 
-		}
+		createToolTip(e);
 	}
 	
 	
 	public void mouseMoved(MouseEvent e) {
 		if (exitToolTip == true && getLabel(e) == -1) {
-			System.out.println("here");
 			pane.remove(tooltip);
 			pane.validate(); 
 			pane.repaint(); 

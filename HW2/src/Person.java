@@ -103,6 +103,6 @@ public class Person {
 	 * Overloads toString with the person's information
 	 */
 	public String toString() {
-		return String.format("%s - %d years old - Person", name, age); 
+		return String.format("%s\n%d years old\nPerson", name, age); 
 	}
 }

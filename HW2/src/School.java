@@ -26,15 +26,25 @@ public class School extends Building {
 	
 	/** 
 	 * keeps track of the teachers and kids currently in the school 
+	 * @param verbose	whether to print out the names of all the kids and teachers in the school
+	 * @return	number of kids and teachers in the school
 	 */
-	public void getTeachersAndKids() {
-		System.out.println("\nTEACHERS AND STUDENTS");
+	public int getTeachersAndKids(boolean verbose) {
+		if (verbose) System.out.println("\nTEACHERS AND STUDENTS");
 		for (int i = 0; i < occupants.size(); i++) {
 			if (occupants.get(i) instanceof Teacher || occupants.get(i) instanceof Kid) {
 				teachersAndStudents.add(occupants.get(i)); 
-				System.out.println(occupants.get(i).toString());
+				if (verbose) System.out.println(occupants.get(i).toString());
 			}
 		}
+		return teachersAndStudents.size(); 
 	}
-
+	
+	/** 
+	 * Gives information about the building
+	 * @return	building information 
+	 */
+	public String toString() {
+		return String.format("%s\n%s\n%d teachers and students\ninside", name, address, getTeachersAndKids(false)); 
+	}
 }

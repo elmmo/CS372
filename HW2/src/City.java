@@ -164,7 +164,7 @@ public class City {
 	
 	/** 
 	 * prints out the names of all the people in the city 
-	 * @param verbose	if the progam should print the names of all the people
+	 * @param verbose	if the program should print the names of all the people
 	 * @return an array of the people in the city 
 	 */
 	public Object[] getAllPeople(boolean verbose) {

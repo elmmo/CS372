@@ -73,6 +73,6 @@ public class Police extends Person implements Employee {
 	 * Overloads toString as a short self-introduction 
 	 */
 	public String toString() {
-		return String.format("%s - %d years old - Police - Position: %s", name, age, enumFormat(position, false)); 
+		return String.format("%s\n%d years old\nPolice\nPosition: %s", name, age, enumFormat(position, false)); 
 	}
 }

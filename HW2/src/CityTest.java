@@ -8,8 +8,8 @@ public class CityTest {
 		City c = new City(); 
 		c.getAllPeople(true); 
 		c.getAllBuildings();
-		c.cityHall.getPoliceOfficers();
-		c.school.getTeachersAndKids();
+		c.cityHall.getPoliceOfficers(true);
+		c.school.getTeachersAndKids(true);
 	}
 
 }

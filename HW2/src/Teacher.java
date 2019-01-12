@@ -64,7 +64,7 @@ public class Teacher extends Person implements Employee {
 	 * Overloads toString with the teacher's information
 	 */
 	public String toString() {
-		return String.format("%s - %d years old - Teacher - Grade %d - Certification: %s", name, age, gradeLevel, enumFormat(cert, false)); 
+		return String.format("%s\n%d years old\nTeacher\nGrade %d\nCertification: %s", name, age, gradeLevel, enumFormat(cert, false)); 
 	}
 
 }

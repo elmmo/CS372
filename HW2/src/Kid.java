@@ -46,6 +46,6 @@ public class Kid extends Person {
 	 * Standard form for the kid producing the kid's name 
 	 */
 	public String toString() {
-		return String.format("%s - %d years old - Kid - Favorite Candy: %s", name, age, enumFormat(favCandy, false)); 
+		return String.format("%s\n%d years old\nKid\nFavorite Candy: %s", name, age, enumFormat(favCandy, false)); 
 	}
 }

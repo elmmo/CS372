@@ -1,4 +1,6 @@
-import java.io.File; 
+import java.io.File;
+import java.net.URI;
+import java.net.URL;
 import java.util.Scanner;
 
 import java.util.ArrayList; 
@@ -34,7 +36,7 @@ public class City {
 	 */
 	void citizenPopulation() throws Exception {
 		citizens = new ArrayList<Person>(); 
-		File file = new File("citizens.txt"); 
+		File file = new File("src/resources/citizens.txt"); 
 		console = new Scanner(file); 
 		while (console.hasNextLine()) {
 			int rnd = (int)(Math.random()*99); 
@@ -124,7 +126,7 @@ public class City {
 	 */
 	void buildingPopulation() throws Exception {
 		buildings = new ArrayList<Building>(); 
-		File file = new File("buildings"); 
+		File file = new File("src/resources/buildings");
 		console = new Scanner(file); 
 		
 		while (console.hasNextLine()) {
@@ -162,13 +164,19 @@ public class City {
 	
 	/** 
 	 * prints out the names of all the people in the city 
+	 * @param verbose	if the program should print the names of all the people
+	 * @return an array of the people in the city 
 	 */
-	public void getAllPeople() {
+	public Object[] getAllPeople(boolean verbose) {
 		System.out.println("\nPEOPLE");
-		for (int i = 0; i < citizens.size(); i++) {
-			Person c = (Person)citizens.get(i); 
+		Object[] arr = citizens.toArray(); 
+		
+		for (int i = 0; i < arr.length; i++) {
+			Person c = (Person)arr[i]; 
 			System.out.println(c.getName());
 		}
+		
+		return arr; 
 	}
 	
 	/** 

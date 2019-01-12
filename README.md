@@ -1,8 +1,3 @@
-## HW1
-Note: I was adding on more functionality beyond the requirements and ended up having to put in some temporary solutions while I figure out how to best continue working in those options. Everything works, but some of the variable passing isn't ideal (and I'm working on it). 
-
-### Assumptions  
-
 1. Scanner 
 This HW assignment assumes that every function should be written so it can be run anywhere on its own. Because every function requires user input, one Scanner is stored in a class variable and used for every function. 
 
@@ -27,3 +22,7 @@ Comments aren't written for getters and setters unless the function declaration 
 
 1. Employee Payment  
 Assumes that the Employee that the method is called on is the boss, not the employee to be paid. 
+
+## HW3
+
+1. Known issue: the movement on the labels is slightly skewed, so the most reliable way of clicking and/or dragging any object is to click at the center of the top. This isn't the result of my code. 

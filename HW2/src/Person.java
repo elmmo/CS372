@@ -88,9 +88,28 @@ public class Person {
 	}
 	
 	/** 
-	 * Overloads toString as a short self-introduction 
+	 * gets a version of the enum text that's easy to use in string contexts 
+	 * @param c	the enum to convert
+	 * @return	the formatted string 
+	 */
+	public String enumFormat(Enum c) {
+		StringBuilder builder = new StringBuilder(); 
+		String enumText = c.toString(); 
+		String[] enumArr = enumText.split("_"); 
+		for (int i = 0; i < enumArr.length; i++) {
+			if (i > 0) builder.append(" "); 
+			builder.append(enumArr[i].substring(0, 1));
+			builder.append(enumArr[i].substring(1, enumArr[i].length()).toLowerCase());
+		}
+		return builder.toString(); 
+	}
+
+	
+	/** 
+	 * Overloads toString with the person's information
+	 * @return	string representation of the object 
 	 */
 	public String toString() {
-		return String.format("Hi, my name is %s, and I'm %d years old.", name, age); 
+		return String.format("%s\n%d years old\nPerson", name, age); 
 	}
 }

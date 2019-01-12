@@ -1,3 +1,4 @@
+## HW 1
 1. Scanner 
 This HW assignment assumes that every function should be written so it can be run anywhere on its own. Because every function requires user input, one Scanner is stored in a class variable and used for every function. 
 

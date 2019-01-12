@@ -12,9 +12,7 @@ enum Certification {
 	 * @return num items in enum 
 	 */
 	static int length() {
-		int len = 0; 
-		for (Certification role : Certification.values()) len++; 
-		return len; 
+		return Certification.values().length; 
 	}
 }
 
@@ -61,12 +59,12 @@ public class Teacher extends Person implements Employee {
 	public int getId() {
 		return id; 
 	}
-	
+
 	/** 
-	 * Overloads toString as a short self-introduction 
+	 * Overloads toString with the teacher's information
 	 */
 	public String toString() {
-		return String.format("Hi, my name is %s, I'm %d years old, and I'm a teacher!", name, age); 
+		return String.format("%s - %d years old - Teacher - Grade %d - Certification: %s", name, age, gradeLevel, enumFormat(cert, false)); 
 	}
 
 }

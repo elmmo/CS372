@@ -62,9 +62,17 @@ public class Police extends Person implements Employee {
 	}
 	
 	/** 
+	 * gets the policeman's position
+	 * @return	position 
+	 */
+	public PoliceRole getPosition() {
+		return position; 
+	}
+	
+	/** 
 	 * Overloads toString as a short self-introduction 
 	 */
 	public String toString() {
-		return String.format("Hi, my name is %s, I'm %d years old, and I'm a policeman.", name, age); 
+		return String.format("%s - %d years old - Police - Position: %s", name, age, enumFormat(position, false)); 
 	}
 }

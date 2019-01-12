@@ -88,9 +88,21 @@ public class Person {
 	}
 	
 	/** 
-	 * Overloads toString as a short self-introduction 
+	 * gets a version of the enum text that's easy to use in string contexts 
+	 * @param c	the enum to convert
+	 * @param capitalize	whether to capitalize the first letter of the enum 
+	 * @return	the formatted string 
+	 */
+	public String enumFormat(Enum c, boolean capitalize) {
+		String enumText = c.toString(); 
+		return capitalize ? enumText.substring(1, enumText.length()-1) : enumText.toLowerCase();
+	}
+
+	
+	/** 
+	 * Overloads toString with the person's information
 	 */
 	public String toString() {
-		return String.format("Hi, my name is %s, and I'm %d years old.", name, age); 
+		return String.format("%s - %d years old - Person", name, age); 
 	}
 }

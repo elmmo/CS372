@@ -1,10 +1,20 @@
-import java.awt.*; 
-import java.awt.event.*;
-import java.net.URL;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.net.URL; 
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JTextArea;
 import javax.swing.event.MouseInputListener; 
 
+/** 
+ * GUI for the City class 
+ * @author Elizabeth
+ *
+ */
 public class Conversion implements MouseInputListener {
 	JFrame frame; 
 	JLayeredPane pane; 
@@ -18,10 +28,16 @@ public class Conversion implements MouseInputListener {
 	JTextArea tooltip; 
 	boolean exitToolTip = false; 
 	
+	/** 
+	 * default constructor that initializes the gui
+	 */
 	Conversion() {
 		initialize(); 
 	}
 	
+	/** 
+	 * Runs all the initial functions and sets up variables for the rest of the class to use 
+	 */
 	private void initialize() {
 		// creating frame 
 		frame = new JFrame(); 
@@ -51,6 +67,9 @@ public class Conversion implements MouseInputListener {
 		frame.setVisible(true);
 	}
 	
+	/** 
+	 * positions the images in the background of the gui
+	 */
 	private void createBackground() {
 		createIcon("/resources/cityHallresize.png", -30, -10, 331, 331, 1, true); 
 		buildingInfo[0] = c.cityHall;  
@@ -59,6 +78,17 @@ public class Conversion implements MouseInputListener {
 		buildingInfo[1] = c.school; 
 	}
 	
+	/** 
+	 * Modifies the JLabel to fit the specs in the parameters 
+	 * @param loc	where to find the image that will go on the icon 
+	 * @param x		the x coordinate where the upper left corner should be placed
+	 * @param y		the y coordinate where the upper left corner should be placed 
+	 * @param width	the width of the jlabel 
+	 * @param height	the height of the jlabel 
+	 * @param layer		the layer to place the label at in the layered pane 
+	 * @param building	if true, this is a building and should be inserted after the citizens are inside 
+	 * @return			the formatted JLabel
+	 */
 	private JLabel createIcon(String loc, int x, int y, int width, int height, Integer layer, boolean building) {
 		try {
 			URL resource = getClass().getResource(loc); 
@@ -87,6 +117,9 @@ public class Conversion implements MouseInputListener {
 		return null;
 	}
 	
+	/** 
+	 * Takes information derived from the City object to generate and place the citizens in the city 
+	 */
 	private void populate() {
 		for (int i = 0; i < cZens.length; i++) {
 			JLabel l = new JLabel(); 
@@ -95,14 +128,18 @@ public class Conversion implements MouseInputListener {
 				Person p = (Person)citizenInfo[i]; 
 				
 				// setting based on where the person was placed 
-				l.setBounds(380, 50+(i*10), 90, 30);
+
+				l.setBounds(380+(i*11), 5+(i*19), 90, 30);
 				c.school.getAllOccupants(); 
-				if (c.school.isOccupantInside(p)) l.setBounds(900, 50+(i*15), 90, 30);
+				if (c.school.isOccupantInside(p)) l.setBounds(950+(i*5), 50+(i*10), 90, 30);
 				c.cityHall.getAllOccupants(); 
-				if (c.cityHall.isOccupantInside(p)) l.setBounds(200, 50+(i*10), 90, 30);
+				if (c.cityHall.isOccupantInside(p)) l.setBounds(50+(i*5), 50+(i*10), 90, 30);
 				
 				l.setOpaque(true);
 				l.setBackground(Color.orange);
+				if (p instanceof Kid) l.setBackground(Color.pink);
+				if (p instanceof Teacher) l.setBackground(Color.blue);
+				if (p instanceof Police) l.setBackground(Color.gray);
 				l.setText(p.getName());
 				cZens[i] = l; 
 				pane.add(cZens[i], new Integer(2)); 
@@ -110,6 +147,11 @@ public class Conversion implements MouseInputListener {
 		}
 	}
 	
+	/** 
+	 * returns the index of the label that the mouse is currently on 
+	 * @param listener	the cursor action to listen to 
+	 * @return	the index of the label 
+	 */
 	public int getLabel(MouseEvent listener) {
 		for (int i = 0; i < cZens.length; i++) {
 			if (cZens[i].getBounds().contains(listener.getPoint())) {
@@ -120,9 +162,9 @@ public class Conversion implements MouseInputListener {
 	}
 	
 	/** 
-	 * 
+	 * Creates a tooltip out of a JTextArea that will display on click 
 	 * Input validation is suggested in mouse motion listeners
-	 * @param e
+	 * @param e	cursor movement to respond to 
 	 */
 	public void createToolTip(MouseEvent e) {
 		Object o; 
@@ -142,11 +184,15 @@ public class Conversion implements MouseInputListener {
 		}
 	}
 	
-	// could make much more efficient 
+	/** 
+	 * Allows for people to be dragged from place to place 
+	 * Has no effect for info labels and the background 
+	 * @param e	the cursor action to respond to 
+	 */
 	public void mouseDragged(MouseEvent e) {
 		int index = getLabel(e); 
 		
-		if (index != -1) {
+		if (index != -1 && index < citizenInfo.length) {
 			JLabel l = cZens[index]; 
 			Person p = (Person)citizenInfo[index]; 
 			
@@ -176,17 +222,18 @@ public class Conversion implements MouseInputListener {
 		}
 	}
 	
-	public void mouseEntered(MouseEvent e) {}
-	
-	public void mouseReleased(MouseEvent e) {}
-	
-	public void mouseExited(MouseEvent e) {}
-	
+	/** 
+	 * Event listener for creating the tooltip 
+	 * @param e	the cursor movement to respond to 
+	 */
 	public void mouseClicked(MouseEvent e) {
 		createToolTip(e);
 	}
 	
-	
+	/** 
+	 * used for recognizing when a user wants the tooltip to close 
+	 * @param e	cursor movement to respond to 
+	 */
 	public void mouseMoved(MouseEvent e) {
 		if (exitToolTip == true && getLabel(e) == -1) {
 			pane.remove(tooltip);
@@ -195,5 +242,24 @@ public class Conversion implements MouseInputListener {
 			exitToolTip = false; 
 		}
 	}
+	
+	/** 
+	 * Required interface method that isn't used in this application 
+	 */
+	public void mouseEntered(MouseEvent e) {}
+	
+	/** 
+	 * Required interface method that isn't used in this application 
+	 */
+	public void mouseReleased(MouseEvent e) {}
+	
+	/** 
+	 * Required interface method that isn't used in this application 
+	 */
+	public void mouseExited(MouseEvent e) {}
+	
+	/** 
+	 * Required interface method that isn't used in this application 
+	 */
 	public void mousePressed(MouseEvent e) {}
 }

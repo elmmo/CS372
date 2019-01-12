@@ -90,17 +90,24 @@ public class Person {
 	/** 
 	 * gets a version of the enum text that's easy to use in string contexts 
 	 * @param c	the enum to convert
-	 * @param capitalize	whether to capitalize the first letter of the enum 
 	 * @return	the formatted string 
 	 */
-	public String enumFormat(Enum c, boolean capitalize) {
+	public String enumFormat(Enum c) {
+		StringBuilder builder = new StringBuilder(); 
 		String enumText = c.toString(); 
-		return capitalize ? enumText.substring(1, enumText.length()-1) : enumText.toLowerCase();
+		String[] enumArr = enumText.split("_"); 
+		for (int i = 0; i < enumArr.length; i++) {
+			if (i > 0) builder.append(" "); 
+			builder.append(enumArr[i].substring(0, 1));
+			builder.append(enumArr[i].substring(1, enumArr[i].length()).toLowerCase());
+		}
+		return builder.toString(); 
 	}
 
 	
 	/** 
 	 * Overloads toString with the person's information
+	 * @return	string representation of the object 
 	 */
 	public String toString() {
 		return String.format("%s\n%d years old\nPerson", name, age); 

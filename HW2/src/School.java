@@ -32,12 +32,21 @@ public class School extends Building {
 	public int getTeachersAndKids(boolean verbose) {
 		if (verbose) System.out.println("\nTEACHERS AND STUDENTS");
 		for (int i = 0; i < occupants.size(); i++) {
-			if (occupants.get(i) instanceof Teacher || occupants.get(i) instanceof Kid) {
-				teachersAndStudents.add(occupants.get(i)); 
+			Person occupant = occupants.get(i); 
+			if (occupant instanceof Teacher || occupant instanceof Kid) {
+				if (!(teachersAndStudents.contains(occupant))) teachersAndStudents.add(occupants.get(i)); 
 				if (verbose) System.out.println(occupants.get(i).toString());
 			}
 		}
 		return teachersAndStudents.size(); 
+	}
+	
+	/** 
+	 * uses the helper function inherited from Building to be specific to CityHall
+	 * @param p	the person to remove from the building 
+	 */
+	public void removeOccupant(Person p) {
+		removeOccupant(p, teachersAndStudents); 
 	}
 	
 	/** 

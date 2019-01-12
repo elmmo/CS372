@@ -9,7 +9,7 @@ public class CityTest {
 		c.getAllPeople(true); 
 		c.getAllBuildings();
 		c.cityHall.getPoliceOfficers(true);
-		c.school.getTeachersAndKids(true);
+		c.school.getTeachersAndKids(false);
 	}
 
 }

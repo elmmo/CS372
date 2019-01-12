@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * @author Elizabeth Min 
  */
 public class CityHall extends Building {
-	ArrayList<Police> police = new ArrayList<Police>(); 
+	ArrayList<Person> police = new ArrayList<Person>(); 
 
 	/** 
 	 * default constructor that subs in placeholder values for the name and address
@@ -31,12 +31,21 @@ public class CityHall extends Building {
 	public int getPoliceOfficers(boolean verbose) {
 		if (verbose) System.out.println("\nPOLICE OFFICERS");
 		for (int i = 0; i < occupants.size(); i++) {
-			if (occupants.get(i) instanceof Police) {
+			Person occupant = occupants.get(i); 
+			if (occupant instanceof Police && !(police.contains(occupant))) {
 				police.add((Police)occupants.get(i)); 
-				if (verbose) System.out.println(occupants.get(i).getName());
+				if (verbose) System.out.println(occupants.get(i).toString());
 			}
 		}
 		return police.size(); 
+	}
+	
+	/** 
+	 * uses the helper function inherited from Building to be specific to CityHall
+	 * @param p	the person to remove from the building 
+	 */
+	public void removeOccupant(Person p) {
+		removeOccupant(p, police); 
 	}
 	
 	/** 

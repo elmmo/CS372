@@ -74,10 +74,14 @@ public class Building {
 	public void addOccupant(Person p) { occupants.add(p); }
 	
 	/** 
-	 * removes a person from the building 
+	 * removes a person from the building and any specialty categories they may be a part of 
+	 * can be used as a helper function or as is 
 	 * @param p	the person to remove from the building 
 	 */
-	public void removeOccupant(Person p) { occupants.remove(p); }
+	public void removeOccupant(Person p, ArrayList<Person> arr) { 
+		if (arr != null) arr.remove(p);
+		occupants.remove(p); 
+	}
 	
 	/** 
 	 * Gives information about the building

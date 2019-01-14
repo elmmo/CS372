@@ -71,6 +71,7 @@ public class Building {
 	 * adds a person to the building 
 	 * @param p	the person to add to the building 
 	 */
+	//PT -- maybe have these return bool, in case it fails?
 	public void addOccupant(Person p) { occupants.add(p); }
 	
 	/** 

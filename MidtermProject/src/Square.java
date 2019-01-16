@@ -38,7 +38,7 @@ public class Square implements Shape {
 	 */
 	@Override
 	public String getDetailString() {
-		return String.format("%s\nColor: %s\nSide Length: %d\nArea: %d\nPerimeter%d", toString(), color, side, area, perimeter); 
+		return String.format("%s\nColor: %s\nSide Length: %d\nArea: %d\nPerimeter: %d", toString(), color, side, area, perimeter); 
 	}
 
 	/* (non-Javadoc)

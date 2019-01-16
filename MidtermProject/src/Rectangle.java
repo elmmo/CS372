@@ -40,7 +40,7 @@ public class Rectangle implements Shape {
 	 */
 	@Override
 	public String getDetailString() {
-		return String.format("%s\nColor: %s\nWidth: %d\nLength: %d\nArea: %d\nPerimeter%d", toString(), color, width, length, area, perimeter); 
+		return String.format("%s\nColor: %s\nWidth: %d\nLength: %d\nArea: %d\nPerimeter: %d", toString(), color, width, length, area, perimeter); 
 	}
 
 	/* (non-Javadoc)

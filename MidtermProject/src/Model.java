@@ -67,4 +67,42 @@ public class Model {
 			e.printStackTrace(); 
 		}
 	}
+	
+	/** 
+	 * Returns a HashMap containing shapes ordered by their ids 
+	 * @return	shapes
+	 */
+	public HashMap<Integer, Shape> getShapes() {
+		return shapes; 
+	}
+	
+	/** 
+	 * Helper function for the Controller that gets a list of shape ids 
+	 * @return	ids 
+	 */
+	public Integer[] getIds() {
+		Integer[] ids = new Integer[shapes.size()]; 
+		int i = 0; 
+		for (HashMap.Entry<Integer, Shape> entry : shapes.entrySet()) {
+			ids[i] = entry.getKey(); 
+			i++; 
+		}
+		return ids; 
+	}
+	
+	/** 
+	 * Helper function that produces an array to pass to the JScrollPane in Controller 
+	 * @return	String array of the String representations of the shapes 
+	 */
+	public String[] getInfo() {
+		String[] info = new String[shapes.size()]; 
+		int i = 0; 
+		for (HashMap.Entry<Integer, Shape> entry : shapes.entrySet()) {
+			String e = entry.toString(); 
+			int start = e.indexOf("="); 
+			info[i] = e.substring(start+1, e.length()); 
+			i++; 
+		}
+		return info; 
+	}
 }

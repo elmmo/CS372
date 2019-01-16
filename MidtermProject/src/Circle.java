@@ -38,7 +38,7 @@ public class Circle implements Shape {
 	 */
 	@Override
 	public String getDetailString() {
-		return String.format("%s\nColor: %s\nRadius: %d\nArea: %.4f\nCircumference%.4f", toString(), color, radius, area, circumference); 
+		return String.format("%s\nColor: %s\nRadius: %d\nArea: %.4f\nCircumference: %.4f", toString(), color, radius, area, circumference); 
 	}
 
 	/* (non-Javadoc)

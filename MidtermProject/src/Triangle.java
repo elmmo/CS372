@@ -9,7 +9,7 @@ public class Triangle implements Shape {
 	int side3; 
 	String color; 
 	double area; 
-	int perimeter; 
+	double perimeter; 
 	
 	Triangle(int id, int side1, int side2, int side3, String color) {
 		this.id = id; 
@@ -20,8 +20,8 @@ public class Triangle implements Shape {
 		perimeter = side1 + side2 + side3; 
 		
 		// for Heron's Formula 
-		int p = perimeter/2; 
-		area = Math.sqrt(p*(p-side1)*(p-side2)*(p-side3));  
+		double p = perimeter/2; 
+		area = Math.sqrt(p*(p-(double)side1)*(p-(double)side2)*(p-(double)side3));  
 	}
 	
 	/* (non-Javadoc)
@@ -45,7 +45,7 @@ public class Triangle implements Shape {
 	 */
 	@Override
 	public String getDetailString() {
-		return String.format("%s\nColor: %s\nSide 1: %d\nSide 2: %d\nSide 3: %d\nArea: %.04f\nPerimeter%d", toString(), color, side1, side2, side3, area, perimeter); 
+		return String.format("%s\nColor: %s\nSide 1: %d\nSide 2: %d\nSide 3: %d\nArea: %.04f\nPerimeter: %.0f", toString(), color, side1, side2, side3, area, perimeter); 
 	}
 
 	/* (non-Javadoc)

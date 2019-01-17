@@ -13,12 +13,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel; 
 import javax.swing.JPanel; 
 
+/** 
+ * Creates an instance of the dice throwing from the game Yahtzee
+ * @author Elizabeth Min
+ */
 public class Yahtzee extends JFrame {
 	int total; 
 	int entries; 
 	JLabel result; 
 	YahtzeeRoll[] rolls;
 	
+	/** 
+	 * Default constructor that sets up each part of the gui for the dice simulation
+	 */
 	Yahtzee() {
 		// for keeping track of the running die total
 		total = 0; 
@@ -45,6 +52,7 @@ public class Yahtzee extends JFrame {
 		});
 		this.add(launch);
 		
+		// keeps track of when the value of the die is stored and reached 
 		PropertyChangeListener pcl = setUpChangeListener(); 
 		
 		// initializes each of the die 
@@ -69,8 +77,11 @@ public class Yahtzee extends JFrame {
 		this.setVisible(true);
 	}
 	
+	/** 
+	 * populates the images array for use in assigning to the dice 
+	 * @return	an array of image icons that can be passed to Swing components
+	 */
 	private ImageIcon[] generateImages() {
-		// populate images with the dice images 
 		ImageIcon[] images = new ImageIcon[6];
 		for (int i = 1; i <= images.length; i++) {
 			URL resource = getClass().getResource("resources/" + i + ".png"); 
@@ -79,6 +90,15 @@ public class Yahtzee extends JFrame {
 		return images; 
 	}
 	
+	/** 
+	 * Generates a JLabel based on the parameters 
+	 * @param width		how wide the JLabel should be 
+	 * @param height	how tall the JLabel should be 
+	 * @param c			color 
+	 * @param text		text to display 
+	 * @param img		background image 
+	 * @return			the generated JLabel
+	 */
 	private JLabel generateLabel(int width, int height, Color c, String text, ImageIcon img) {
 		JLabel temp = new JLabel(); 
 		temp.setPreferredSize(new Dimension(width, height));
@@ -86,20 +106,27 @@ public class Yahtzee extends JFrame {
 		temp.setOpaque(true);
 		temp.setHorizontalAlignment(JLabel.CENTER);
 		temp.setText(text);
-		if (img != null) {
+		if (img != null) { // for captions and text-based labels
 			temp.setIcon(img);
 		}
 		return temp; 
 	}
 	
+	/** 
+	 * Sets up a change listener for when the text of a label is changed 
+	 * @return	the configured change listener
+	 */
 	private PropertyChangeListener setUpChangeListener() {
 		PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent pce) {
+				// validates that the changed property is the one that's being targeted
 				String property = pce.getPropertyName();
 				if (property.equals("text")) {
+					// changed value is used to calculate running total of the dice 
 					String val = (String)pce.getNewValue(); 
 					total += Integer.parseInt(val); 
-					entries++; 
+					entries++; // keeps track of how many dice have determined their values 
+					// if all entries are in 
 					if (entries == 6) {
 						result.setBackground(Color.green);
 						result.setText(Integer.toString(total));
@@ -110,6 +137,9 @@ public class Yahtzee extends JFrame {
 		return propertyChangeListener; 
 	}
 	
+	/** 
+	 * starts the yahtzee instance 
+	 */
 	private void launch() {
 		for (int i = 0; i < rolls.length; i++) {
 			Thread t = new Thread(rolls[i]); 

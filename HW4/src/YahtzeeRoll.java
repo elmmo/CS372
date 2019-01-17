@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -8,22 +9,12 @@ public class YahtzeeRoll implements Runnable {
 	ImageIcon[] images; 
 	JLabel label;
 	int value; 
-	JLabel caption; 
+	JLabel caption;
 	
-	YahtzeeRoll(JLabel l, JLabel caption) {
+	YahtzeeRoll(JLabel l, JLabel caption, ImageIcon[] images) {
 		this.caption = caption; 
-		initialize(); 
+		this.images = images; 
 		label = l; 
-	}
-	
-	private void initialize() {
-		// populate images with the dice images 
-		images = new ImageIcon[6];
-		for (int i = 1; i <= images.length; i++) {
-			URL resource = getClass().getResource("resources/" + i + ".png"); 
-			images[i-1] = new ImageIcon(resource); 
-		}
-		
 	}
 	
 	public void run() {
@@ -47,7 +38,8 @@ public class YahtzeeRoll implements Runnable {
 	}
 	
 	public void setValue() {
-		caption.setText(Integer.toString(value));
+		caption.setBackground(Color.white);
+		caption.setText(Integer.toString(value)); 
 	}
 }
 

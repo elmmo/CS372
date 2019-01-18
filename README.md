@@ -1,5 +1,5 @@
 ## HW 1
-1. Scanner 
+1. **Scanner**  
 This HW assignment assumes that every function should be written so it can be run anywhere on its own. Because every function requires user input, one Scanner is stored in a class variable and used for every function. 
 
 2. **stringToInt**  
@@ -16,7 +16,7 @@ The Date class in exercise #6 can use the pre-existing Date object to get the cu
 Date has three constructors: a default constructor, a constructor that takes ints as arguments, and a constructor that takes a String for the month. The constructor that takes ints as args is one-indexed rather than zero-indexed, to make the program accessible even to those unfamiliar with computer science principles. 
 Any year input must be made up of at least four integers.  
 
-6. Getters and Setters
+6. **Getters and Setters**  
 Comments aren't written for getters and setters unless the function declaration is unclear. 
 
 ## HW2
@@ -26,4 +26,4 @@ Assumes that the Employee that the method is called on is the boss, not the empl
 
 ## HW3
 
-1. Known issue: the movement on the labels is slightly skewed, so the most reliable way of clicking and/or dragging any object is to click at the center of the top. This isn't the result of my code. 
+1. Known issue: the movement on the labels is slightly skewed, so the most reliable way of clicking and/or dragging any object is to click at the center of the top. This isn't the result of my code.

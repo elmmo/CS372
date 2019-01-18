@@ -4,6 +4,7 @@
  */
 public class Test {
 	public static void main(String[] args) {
-		Yahtzee y = new Yahtzee(); 
+		//Yahtzee y = new Yahtzee(); 
+		Spider s = new Spider(); 
 	}
 }

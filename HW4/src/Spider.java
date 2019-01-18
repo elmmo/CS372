@@ -7,6 +7,11 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Pattern; 
 
+/** 
+ * Controls and compiles data from a group of web crawlers that scrape web pages for emails 
+ * @author Elizabeth Min
+ *
+ */
 public class Spider {
 	protected HashMap<String, Boolean> urls; 
 	protected Set<String> emails; 
@@ -17,7 +22,11 @@ public class Spider {
 	boolean verbose; 
 	SpiderCrawl[] crawlers; 
 	
+	/** 
+	 * Default constructor that takes user input to determine crawling properties 
+	 */
 	Spider() {
+		// used to validate links to crawl over 
 		baseUrl = "https://www.whitworth.edu"; 
 		email = Pattern.compile("\"mailto:(.*?)\""); 
 		link = Pattern.compile("<a\\s*?href=\"(.*?)\""); 
@@ -27,7 +36,7 @@ public class Spider {
 		emails = new HashSet<String>(); 
 		finished = new Stack<Boolean>(); 
 		
-		// prompts user for system options
+		// prompts user for system options and ensures that the user input is reasonable 
 		boolean reasonable = false; 
 		Scanner console = new Scanner(System.in); 
 		String start = "https://www.whitworth.edu/cms/academics/undergraduate-majors-and-programs/"; 
@@ -38,16 +47,16 @@ public class Spider {
 				System.out.print("What URL should the spider start at? ");
 				start = console.next(); 
 				try {
+					// Uses URL creation to validate the passed string
 					URL trialUrl = new URL(start); 
 					System.out.println("try" + reasonable);
 					reasonable = true; 
 				} catch (MalformedURLException e) {
-					System.out.println("catch" + reasonable);
 					System.out.println("That's not a valid URL! Try again.");
 				}
 			} while (!reasonable); 
 		}
-		// one crawler for every 100 urls, with a max of 1000 urls
+		// one crawler for every 100 urls, with a cap of 1000 urls
 		int max;
 		do {
 			System.out.print("How many URLs should the spider crawl? ");
@@ -55,23 +64,31 @@ public class Spider {
 			reasonable = (max < 1000) ? true : false; 
 			if (!reasonable) System.out.println("That number's too high! Try for something lower than 1000.");
 		} while (!reasonable); 
-		int crawlerCount = max/100; 
+		int crawlerCount = (max > 100) ? max/100 : 1; 
 		System.out.print("Would you like verbose output? (y/n) ");
 		verbose = (console.next().equals("y")) ? true : false; 
 		console.close(); 
 		
 		crawlers = new SpiderCrawl[crawlerCount]; 
+		// uses user input to input the first url in the array to traverse
 		urls.put(start, false); 
 		
+		// populates the array of crawlers 
 		for (int i = 0; i < crawlers.length; i++) {
 			crawlers[i] = new SpiderCrawl(this, max, verbose); 
 		}
+		
+		// starts the crawlers
 		launch(); 
 	}
 	
+	/** 
+	 * Launches the crawlers created by the default constructors
+	 */
 	private void launch() {
 		for (int i = 0; i < crawlers.length; i++) {
 			if (verbose) System.out.println("New crawler entering..."); 
+			// uses a stack to determine how many active crawlers there are 
 			finished.push(false);
 			Thread t = new Thread(crawlers[i]); 
 			t.start(); 

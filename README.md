@@ -27,3 +27,7 @@ Assumes that the Employee that the method is called on is the boss, not the empl
 ## HW3
 
 1. Known issue: the movement on the labels is slightly skewed, so the most reliable way of clicking and/or dragging any object is to click at the center of the top. This isn't the result of my code.
+
+## HW4 
+
+1. Note/Design Decision: The suggestion on the homework was to make the spider stop after 100 URL visits, but this spider takes in user input to determine when the spider should stop. The spider performs better when more URLs are passed, so I would suggest passing in about 500 for testing purposes. I've only tested it up to 1000, so there's a cap there on how many the spider can visit. The spider will generate one crawler for every 100 URLs requested. 

@@ -9,18 +9,19 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher; 
 
 public class SpiderCrawl implements Runnable {
-	final int BREAK_AT = 500; 
+	final int BREAK_AT; 
 	final String[] DONT_ACCEPT = {"form", "#", "?", "mailto", "tel"}; 
 	Spider master; 
 	BufferedReader bReader; 
 	URL url;
 	Matcher emailMatcher; 
 	Matcher linkMatcher; 
-	int index; 
+	boolean verbose; 
 	
-	SpiderCrawl(Spider master, int index) {
+	SpiderCrawl(Spider master, int max, boolean verbose) {
 		this.master = master; 
-		this.index = index; 
+		this.BREAK_AT = max; 
+		this.verbose = verbose; 
 	}
 	
 	public void run() {
@@ -60,7 +61,7 @@ public class SpiderCrawl implements Runnable {
 				if (match.charAt(0) == '/') query += master.baseUrl; 
 				query += match; 
 				if (verifyUrl(query)) {
-					//System.out.println(query);
+					if (verbose) System.out.println("Scraping " + query);
 					putUrl(query, false); 
 				}
 			}
@@ -105,8 +106,12 @@ public class SpiderCrawl implements Runnable {
 		SpiderCallbacks sc = new SpiderCallbacks() {
 			public void report() {
 				System.out.println("\nEMAILS");
-				for (String e : master.emails) {
-					System.out.println(e); 
+				if (master.emails.size() == 0) {
+					System.out.println("No emails to show :(");
+				} else {
+					for (String e : master.emails) {
+						System.out.println(e); 
+					}
 				}
 			}
 			

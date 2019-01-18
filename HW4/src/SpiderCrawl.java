@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.regex.Matcher; 
 
-public class SpiderCrawl {
+public class SpiderCrawl implements Runnable {
 	final int BREAK_AT = 500; 
 	final String[] DONT_ACCEPT = {"form", "#", "?", "mailto", "tel"}; 
 	Spider master; 
@@ -16,15 +16,17 @@ public class SpiderCrawl {
 	URL url;
 	Matcher emailMatcher; 
 	Matcher linkMatcher; 
+	int index; 
 	
-	SpiderCrawl(Spider master) {
+	SpiderCrawl(Spider master, int index) {
 		this.master = master; 
+		this.index = index; 
 	}
 	
-	public void run() throws MalformedURLException {
+	public void run() {
 		System.setProperty("http.agent", "Chrome");
-		if (getNextUrl() != null) {
-			try {
+		try {
+			if (getNextUrl() != null) {
 				bReader = new BufferedReader(new InputStreamReader(url.openStream())); 
 				String line; 
 				while ((line = bReader.readLine()) != null) {
@@ -35,14 +37,16 @@ public class SpiderCrawl {
 					handleUrls(line); 
 				}
 				bReader.close(); 
+				}
 			} catch (FileNotFoundException e) {
 				putUrl(url.toString(), true); 
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
 			} catch (IOException e) {
 				putUrl(url.toString(), true); 
 			}
 			setUpRestart(); 
 		}
-	}
 	
 	private void handleUrls(String line) {
 		linkMatcher = master.link.matcher(line); 
@@ -56,7 +60,7 @@ public class SpiderCrawl {
 				if (match.charAt(0) == '/') query += master.baseUrl; 
 				query += match; 
 				if (verifyUrl(query)) {
-					System.out.println(query);
+					//System.out.println(query);
 					putUrl(query, false); 
 				}
 			}
@@ -92,21 +96,36 @@ public class SpiderCrawl {
 	}
 	
 	private void addEmail(String entry) {
-		master.emails.add(entry); 
+		int dot = entry.lastIndexOf("."); 
+		String toplevel = entry.substring(dot, dot+4); 
+		master.emails.add(entry.substring(0, dot) + toplevel); 
 	}
 	
 	private void setUpRestart() {
-		Restart r = new Restart() {
+		SpiderCallbacks sc = new SpiderCallbacks() {
+			public void report() {
+				System.out.println("\nEMAILS");
+				for (String e : master.emails) {
+					System.out.println(e); 
+				}
+			}
+			
 			public void verify() {
 				try {
-					if (master.urls.size() < BREAK_AT) 
+					if (master.urls.size() < BREAK_AT) {
 						run(); 
+					} else {
+						master.finished.pop(); 
+						if (master.finished.isEmpty()) {
+							report(); 
+						}
+					}
 				} catch (Exception e) {
 					e.printStackTrace(); 
 				}
 			}
 		}; 
 		
-		r.verify(); 
+		sc.verify(); 
 	}
 }

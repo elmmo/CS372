@@ -21,7 +21,7 @@ Comments aren't written for getters and setters unless the function declaration 
 
 ## HW2
 
-1. Employee Payment  
+1. **Employee Payment**  
 Assumes that the Employee that the method is called on is the boss, not the employee to be paid. 
 
 ## HW3

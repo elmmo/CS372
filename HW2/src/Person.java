@@ -29,6 +29,7 @@ public class Person {
 	 */
 	Person(String name, int age, String phoneNum, double moneyInBank) {
 		this.name = name; 
+		//PT -- make sure to validate age and phone number. -1
 		this.age = age; 
 		this.phoneNum = phoneNum; 
 		this.moneyInBank = new BigDecimal(moneyInBank); 

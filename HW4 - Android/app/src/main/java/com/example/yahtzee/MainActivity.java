@@ -1,14 +1,15 @@
 package com.example.yahtzee;
 
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.content.Context;
-import android.util.Log;
 
+/**
+ * Controls and starts all the dice rolls for Yahtzee
+ */
 public class MainActivity extends AppCompatActivity {
     final int DICE_NUM = 5;
     final int DICE_SIDES = 6;
@@ -16,20 +17,27 @@ public class MainActivity extends AppCompatActivity {
     protected ImageView[] dice;
     YahtzeeRoll[] rolls;
     Button rollButton;
-    ImageView img;
-    final String TAG = "ACTIVITY";
 
+    /**
+     * Sets up the gui and declares the storage for the dice rolls
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         images = new int[DICE_SIDES];
+        rolls = new YahtzeeRoll[DICE_NUM];
+        dice = new ImageView[DICE_NUM];
 
         populate();
         setUpListener();
     }
 
+    /**
+     * Adds an onClick listener to the roll button
+     */
     public void setUpListener() {
         rollButton = (Button) findViewById(R.id.roll_button);
 
@@ -42,9 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Populates the storage for the dice rolls
+     */
     private void populate() {
-        rolls = new YahtzeeRoll[DICE_NUM];
-        dice = new ImageView[DICE_NUM];
         for (int i = 0; i < DICE_SIDES; i++) {
             Context context = this;
             int num = i+1;
@@ -65,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Starts the roll process
+     */
     public void launch() {
         for (int i = 0; i < DICE_NUM; i++) {
             Thread t = new Thread(rolls[i]);
